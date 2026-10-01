@@ -21,9 +21,20 @@ export function Car({ model, alt, className = '', sweep = 'idle', children }: Ca
   return (
     <div className={`car ${className}`}>
       <img className="car-body" src={art.body} alt={alt} draggable={false} />
-      {art.wheelX.map((x) => (
-        <img key={x} className="wheel" src={wheel} alt="" draggable={false} style={{ left: `${((x - 62) / 12).toFixed(3)}%` }} />
-      ))}
+      {art.wheels.map(([x, y, r]) => {
+        // wheel.svg is a 160×160 sprite with a 76px tyre radius
+        const size = (r * 160) / 76;
+        return (
+          <img
+            key={x}
+            className="wheel"
+            src={wheel}
+            alt=""
+            draggable={false}
+            style={{ left: `${(x - size / 2) / 12}%`, top: `${(y - size / 2) / 4}%`, width: `${size / 12}%`, height: `${size / 4}%` }}
+          />
+        );
+      })}
       <div className={`sweep m-${model} ${sweep}`} />
       <img className="reflect" src={art.full} alt="" draggable={false} />
       {children}

@@ -7,11 +7,14 @@ import carEqs from '../assets/cars/car-eqs.svg';
 
 export type CarModel = 'sclass' | 'vclass' | 'eqs';
 
-/** Layered artwork per model. Wheel centres are in the 1200×400 artwork's coordinate space. */
-export const CARS: Record<CarModel, { body: string; full: string; wheelX: [number, number] }> = {
-  sclass: { body: bodySclass, full: carSclass, wheelX: [300, 900] },
-  vclass: { body: bodyVclass, full: carVclass, wheelX: [300, 905] },
-  eqs: { body: bodyEqs, full: carEqs, wheelX: [300, 900] },
+/**
+ * Layered artwork per model, drawn to real proportions in a 1200×400 box (ground at y=380).
+ * `wheels` are tyre centres and radii in that box: rear, then front.
+ */
+export const CARS: Record<CarModel, { body: string; full: string; wheels: [number, number, number][] }> = {
+  sclass: { body: bodySclass, full: carSclass, wheels: [[293, 304, 76], [948, 304, 76]] },
+  vclass: { body: bodyVclass, full: carVclass, wheels: [[302, 315, 65], [910, 315, 65]] },
+  eqs: { body: bodyEqs, full: carEqs, wheels: [[267, 302, 78], [944, 302, 78]] },
 };
 
 export const CONTACT = {

@@ -1,6 +1,6 @@
 import json
-S='/_blob/8677e72bf12f9df38d9d902add4159a6'; V='/_blob/1eeeac7fd67120939a466096c1ede7b3'; E='/_blob/753abd4e415880613bc447611295f607'
-MS='/_blob/1fd7b97953a42c6538f99a5b348aa297'; MV='/_blob/a38e09f8f80b2f1053cc1af07e8f7744'; ME='/_blob/e072cfe8de8ce0058192ac3ab9542a75'
+S='/_blob/0971ac2d773b13e7762ca01a1d2e473a'; V='/_blob/039db1e074b8c6e65caa4478426dba6c'; E='/_blob/561a1839b88234038cfc4784725fcd5c'
+MS='/_blob/ee2bc438c8b9af6837a9fc734d6bc895'; MV='/_blob/07553efac52a43f3655f0318f1a239fe'; ME='/_blob/73528bf2b51631a6bf33736e15013ffc'
 ARROW='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>'
 
 BASE_CSS = f'''body{{margin:0;background:#070708}}
@@ -132,7 +132,7 @@ files['Motion1-LightSweep.dc.html'] = board('01','Light sweep','Hero · scroll 0
 <div class="ls-car" style="position: absolute; left: 50%; bottom: 46px; width: 980px; margin-left: -490px; aspect-ratio: 3 / 1">
 <img class="ls-dark" src="{S}" alt="S-Class silhouette" style="position: absolute; inset: 0; width: 100%; height: 100%">
 <div class="sweep m-s ls-band"></div>
-<img class="reflect" src="{S}" alt="" style="position: absolute; left: 0; top: 91%; width: 100%; height: 100%">
+<img class="reflect" src="{S}" alt="" style="position: absolute; left: 0; top: 90%; width: 100%; height: 100%">
 </div>
 <div style="position: absolute; left: 0; right: 0; bottom: 46px; height: 1px; background: linear-gradient(90deg, rgba(237,234,228,0), rgba(237,234,228,0.2), rgba(237,234,228,0))"></div>''')
 
@@ -140,7 +140,7 @@ files['Motion1-LightSweep.dc.html'] = board('01','Light sweep','Hero · scroll 0
 files['Motion2-ThroughTheGlass.dc.html'] = board('02','Through the glass','Hero → Fleet transition · sticky 150vh', .35,
  [{"at":0,"text":"Hero at rest: car side-on, headline above."},{"at":.35,"text":"Camera pushes in toward the rear side window."},{"at":.7,"text":"The tinted glass fills the frame — a black wipe made of the car itself."},{"at":1,"text":"Next section is revealed behind the glass: the fleet."}],
  '''[data-stage]{--z:clamp(0,calc(var(--p) / .8),1)}
-.tg-car{transform-origin:44% 55%;transform:scale(calc(1 + var(--z) * var(--z) * var(--z) * 26));opacity:calc(1 - clamp(0,calc((var(--p) - .82) / .12),1))}
+.tg-car{transform-origin:42% 47%;transform:scale(calc(1 + var(--z) * var(--z) * var(--z) * 26));opacity:calc(1 - clamp(0,calc((var(--p) - .82) / .12),1))}
 .tg-type{opacity:calc(1 - var(--p) * 3)}
 .tg-next{opacity:clamp(0,calc((var(--p) - .78) / .2),1);transform:scale(calc(1.08 - clamp(0,calc((var(--p) - .78) / .2),1) * .08))}''',
  f'''<div class="tg-next" style="position: absolute; inset: 0; background: radial-gradient(70% 60% at 50% 45%, #17171b, #0b0b0d 70%); display: flex; flex-direction: column; justify-content: center; padding: 0 56px; gap: 18px">

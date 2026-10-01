@@ -411,9 +411,6 @@ img {
 }
 .car .wheel {
   position: absolute;
-  top: 59.5%;
-  width: 10.333%;
-  height: 31%;
   transform: rotate(calc(var(--spin, 0) * 1deg));
 }
 .sweep {
@@ -457,7 +454,7 @@ img {
 .reflect {
   position: absolute;
   left: 0;
-  top: 88%;
+  top: 90%;
   width: 100%;
   height: 100%;
   transform: scaleY(-1);
@@ -478,18 +475,18 @@ img {
   animation: ignite 2.4s 0.2s both;
 }
 .bloom-head {
-  left: 82%;
-  top: 44%;
-  width: 14%;
+  left: 83%;
+  top: 38%;
+  width: 15%;
   height: 32%;
 }
 .bloom-head > i {
   background: radial-gradient(closest-side, rgba(228, 238, 255, 0.55), rgba(228, 238, 255, 0.12) 50%, rgba(228, 238, 255, 0) 100%);
 }
 .bloom-tail {
-  left: 4%;
-  top: 48%;
-  width: 13%;
+  left: 2%;
+  top: 32%;
+  width: 15%;
   height: 28%;
 }
 .bloom-tail > i {
@@ -649,21 +646,21 @@ img {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 196px;
+  bottom: 178px;
   display: flex;
   justify-content: center;
   pointer-events: none;
 }
 .hero-rig {
   position: relative;
-  width: min(1160px, 90%, calc((100vh - 440px) * 3));
+  width: min(1100px, 86%, calc((100vh - 460px) * 3));
   min-width: min(680px, 100%);
 }
 .hero-floor {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 196px;
+  bottom: 178px;
   height: 1px;
   background: linear-gradient(90deg, rgba(237, 234, 228, 0), rgba(237, 234, 228, 0.18), rgba(237, 234, 228, 0));
   pointer-events: none;
@@ -992,16 +989,16 @@ img {
   opacity: 1;
 }
 /* each crop frames one detail of the 1200×400 artwork; inactive crops sit slightly off so they glide in */
-.c0 { transform: translate(-75%, -28.8%); }
-.c0:not(.on) { transform: translate(-73%, -28.8%); }
-.c1 { transform: translate(-28.4%, -27.8%); }
-.c1:not(.on) { transform: translate(-26%, -27.8%); }
-.c2 { transform: translate(-59.4%, -42.8%); }
-.c2:not(.on) { transform: translate(-57%, -42.8%); }
-.c3 { transform: translate(0%, -17.8%); }
-.c3:not(.on) { transform: translate(2%, -17.8%); }
-.c4 { transform: translate(-56.4%, -18.8%); }
-.c4:not(.on) { transform: translate(-54%, -18.8%); }
+.c0 { transform: translate(-70%, -20.3%); }
+.c0:not(.on) { transform: translate(-68%, -20.3%); }
+.c1 { transform: translate(-44.4%, -15.3%); }
+.c1:not(.on) { transform: translate(-42.4%, -15.3%); }
+.c2 { transform: translate(-59%, -43.3%); }
+.c2:not(.on) { transform: translate(-57%, -43.3%); }
+.c3 { transform: translate(0%, -9.3%); }
+.c3:not(.on) { transform: translate(2%, -9.3%); }
+.c4 { transform: translate(-58.4%, -10.8%); }
+.c4:not(.on) { transform: translate(-56.4%, -10.8%); }
 .crop-label {
   position: absolute;
   left: 18px;
@@ -1353,7 +1350,7 @@ img {
   transform: translateY(calc(var(--q2) * 40px));
 }
 .hero-rig {
-  transform-origin: 43% 34%;
+  transform-origin: 41% 31%;
   transform: translateX(calc(var(--q2) * -3%)) scale(calc(1 + var(--q2) * 0.14 + var(--q3) * var(--q3) * var(--q3) * 30));
 }
 .hero-pool {

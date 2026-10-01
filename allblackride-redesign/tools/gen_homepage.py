@@ -1,21 +1,30 @@
 B = {
- 'body-sclass': '/_blob/19da95d507139f386ded00bb68fc293a', 'body-vclass': '/_blob/abbbd75f1d897d9101161db9719196cf', 'body-eqs': '/_blob/ece3adde7e8ed1c4c8e7d2dab306ca52',
- 'car-sclass': '/_blob/8677e72bf12f9df38d9d902add4159a6', 'car-vclass': '/_blob/1eeeac7fd67120939a466096c1ede7b3', 'car-eqs': '/_blob/753abd4e415880613bc447611295f607',
- 'mask-sclass': '/_blob/1fd7b97953a42c6538f99a5b348aa297', 'mask-vclass': '/_blob/a38e09f8f80b2f1053cc1af07e8f7744', 'mask-eqs': '/_blob/e072cfe8de8ce0058192ac3ab9542a75',
- 'wheel': '/_blob/847a3b26855b906ab8cdabb89d8d3af4'}
-WX = {'sclass': (300, 900), 'vclass': (300, 905), 'eqs': (300, 900)}
+ 'body-sclass': '/_blob/7d6111a3f44e1c9e375ea855e047a955',
+ 'body-vclass': '/_blob/478af3804f87fd7b279384cb63815b70',
+ 'body-eqs': '/_blob/e9cde08585fe42ff4183ed726bb890ef',
+ 'car-sclass': '/_blob/0971ac2d773b13e7762ca01a1d2e473a',
+ 'car-vclass': '/_blob/039db1e074b8c6e65caa4478426dba6c',
+ 'car-eqs': '/_blob/561a1839b88234038cfc4784725fcd5c',
+ 'mask-sclass': '/_blob/ee2bc438c8b9af6837a9fc734d6bc895',
+ 'mask-vclass': '/_blob/07553efac52a43f3655f0318f1a239fe',
+ 'mask-eqs': '/_blob/73528bf2b51631a6bf33736e15013ffc',
+ 'wheel': '/_blob/2b9e464d4a7ca72916c6cf7b01c8123d',
+}
+# wheel centre x, y and tyre radius in the 1200x400 artwork (drawn to real proportions)
+WX = {'sclass': [(293, 304, 76), (948, 304, 76)], 'vclass': [(302, 315, 65), (910, 315, 65)], 'eqs': [(267, 302, 78), (944, 302, 78)]}
 ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>'
 FONTS = '<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=Instrument+Serif:ital@0;1&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">'
 
 def car(model, alt, extra_cls='', sweep_cls='idle', style=''):
     """Layered car: body, two spinning wheels, light sweep clipped to the body."""
-    wheels = ''.join(
-        f'<img class="wheel" src="{B["wheel"]}" alt="" style="position: absolute; left: {(x - 62) / 12:.3f}%; top: 59.5%; width: 10.333%; height: 31%">'
-        for x in WX[model])
+    def wheel_style(x, y, r):
+        size = r * 160 / 76  # wheel sprite: 160px box, 76px tyre radius
+        return f"position: absolute; left: {(x - size / 2) / 12:.3f}%; top: {(y - size / 2) / 4:.3f}%; width: {size / 12:.3f}%; height: {size / 4:.3f}%"
+    wheels = ''.join(f'<img class="wheel" src="{B["wheel"]}" alt="" style="{wheel_style(x, y, r)}">' for x, y, r in WX[model])
     return (f'<div class="car {extra_cls}" style="position: relative; aspect-ratio: 3 / 1; {style}">'
             f'<img class="body" src="{B["body-" + model]}" alt="{alt}" style="position: absolute; inset: 0; width: 100%; height: 100%">'
             f'{wheels}<div class="sweep m-{model} {sweep_cls}"></div>'
-            f'<img class="reflect" src="{B["car-" + model]}" alt="" style="position: absolute; left: 0; top: 88%; width: 100%; height: 100%"></div>')
+            f'<img class="reflect" src="{B["car-" + model]}" alt="" style="position: absolute; left: 0; top: 90%; width: 100%; height: 100%"></div>')
 
 CSS = f'''body{{margin:0;background:#070708}}
 .abr,.abr *{{box-sizing:border-box}}
@@ -116,7 +125,7 @@ h1,h2,h3{{text-wrap:balance}}
 .hero-sweep{{background-position:calc(110% - var(--q1) * 120%) 0}}
 .hero-type{{opacity:calc(1 - var(--q2) * 1.3);transform:translateY(calc(var(--q2) * -70px))}}
 .hero-dock{{opacity:calc(1 - var(--q2) * 1.6);transform:translateY(calc(var(--q2) * 60px))}}
-.hero-rig{{transform-origin:43% 34%;transform:translateX(calc(var(--q2) * -3%)) scale(calc(1 + var(--q2) * .14 + var(--q3) * var(--q3) * var(--q3) * 30))}}
+.hero-rig{{transform-origin:41% 31%;transform:translateX(calc(var(--q2) * -3%)) scale(calc(1 + var(--q2) * .14 + var(--q3) * var(--q3) * var(--q3) * 30))}}
 .hero-pool{{opacity:calc(.55 + var(--q1) * .45 - var(--q3))}}
 .hero-black{{opacity:var(--q4)}}
 .hero-black span{{transform:translateY(calc((1 - var(--q4)) * 24px))}}
@@ -147,11 +156,11 @@ h1,h2,h3{{text-wrap:balance}}
 .crop{{position:relative;overflow:hidden;aspect-ratio:16 / 11;border-radius:20px;background:radial-gradient(80% 70% at 50% 40%,#18181c,#0a0a0c 75%);border:1px solid rgba(237,234,228,.08)}}
 .crop img{{position:absolute;left:0;top:0;width:320%;max-width:none;opacity:0;transition:opacity .7s,transform 1.2s cubic-bezier(.2,.7,.1,1)}}
 .crop img.on{{opacity:1}}
-.c0{{transform:translate(-75%,-28.8%)}}.c0:not(.on){{transform:translate(-73%,-28.8%)}}
-.c1{{transform:translate(-28.4%,-27.8%)}}.c1:not(.on){{transform:translate(-26%,-27.8%)}}
-.c2{{transform:translate(-59.4%,-42.8%)}}.c2:not(.on){{transform:translate(-57%,-42.8%)}}
-.c3{{transform:translate(0%,-17.8%)}}.c3:not(.on){{transform:translate(2%,-17.8%)}}
-.c4{{transform:translate(-56.4%,-18.8%)}}.c4:not(.on){{transform:translate(-54%,-18.8%)}}
+.c0{{transform:translate(-70%,-20.3%)}}.c0:not(.on){{transform:translate(-68%,-20.3%)}}
+.c1{{transform:translate(-44.4%,-15.3%)}}.c1:not(.on){{transform:translate(-42.4%,-15.3%)}}
+.c2{{transform:translate(-59%,-43.3%)}}.c2:not(.on){{transform:translate(-57%,-43.3%)}}
+.c3{{transform:translate(0%,-9.3%)}}.c3:not(.on){{transform:translate(2%,-9.3%)}}
+.c4{{transform:translate(-58.4%,-10.8%)}}.c4:not(.on){{transform:translate(-56.4%,-10.8%)}}
 
 /* ---------- 04: route draw ---------- */
 #journeys{{--q:clamp(0,calc((var(--p) - .04) / .78),1)}}
@@ -322,14 +331,14 @@ html = f'''<!doctype html>
 <p class="intro-fade d2" style="margin: 0 0 10px; max-width: 330px; font-size: 16px; line-height: 1.6; color: #A39E96">Airport transfers, hourly hire, city-to-city and private tours — in a Mercedes-Benz or BMW, with a professional chauffeur.</p>
 </div>
 
-<div class="hero-carzone" style="position: absolute; left: 0; right: 0; bottom: 196px; display: flex; justify-content: center; pointer-events: none">
-<div class="hero-rig" style="position: relative; width: min(1160px, 90%, calc((100vh - 440px) * 3)); min-width: min(680px, 100%)">
+<div class="hero-carzone" style="position: absolute; left: 0; right: 0; bottom: 178px; display: flex; justify-content: center; pointer-events: none">
+<div class="hero-rig" style="position: relative; width: min(1100px, 86%, calc((100vh - 460px) * 3)); min-width: min(680px, 100%)">
 {car("sclass", "Mercedes-Benz S-Class, side profile, lit by a single line of light", extra_cls="intro-car", sweep_cls="hero-sweep")}
-<div class="bloom" aria-hidden="true" style="left: 82%; top: 44%; width: 14%; height: 32%"><i style="background: radial-gradient(closest-side, rgba(228,238,255,0.55), rgba(228,238,255,0.12) 50%, rgba(228,238,255,0) 100%)"></i></div>
-<div class="bloom" aria-hidden="true" style="left: 4%; top: 48%; width: 13%; height: 28%"><i style="background: radial-gradient(closest-side, rgba(255,80,58,0.5), rgba(255,80,58,0.1) 50%, rgba(255,80,58,0) 100%)"></i></div>
+<div class="bloom" aria-hidden="true" style="left: 83%; top: 38%; width: 15%; height: 32%"><i style="background: radial-gradient(closest-side, rgba(228,238,255,0.55), rgba(228,238,255,0.12) 50%, rgba(228,238,255,0) 100%)"></i></div>
+<div class="bloom" aria-hidden="true" style="left: 2%; top: 32%; width: 15%; height: 28%"><i style="background: radial-gradient(closest-side, rgba(255,80,58,0.5), rgba(255,80,58,0.1) 50%, rgba(255,80,58,0) 100%)"></i></div>
 </div>
 </div>
-<div class="hero-floor" style="position: absolute; left: 0; right: 0; bottom: 196px; height: 1px; background: linear-gradient(90deg, rgba(237,234,228,0), rgba(237,234,228,0.18), rgba(237,234,228,0)); pointer-events: none"></div>
+<div class="hero-floor" style="position: absolute; left: 0; right: 0; bottom: 178px; height: 1px; background: linear-gradient(90deg, rgba(237,234,228,0), rgba(237,234,228,0.18), rgba(237,234,228,0)); pointer-events: none"></div>
 
 <form id="book" class="hero-dock dock-in" aria-label="Book a ride" onSubmit="{{{{onSubmit}}}}" style="position: absolute; z-index: 3; left: {PAD}; right: {PAD}; bottom: 28px; max-width: 1180px; margin: 0 auto; padding: 16px 22px 20px; background: rgba(16,16,19,0.86); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(237,234,228,0.12); border-radius: 22px; display: flex; flex-direction: column; gap: 12px">
 <div role="tablist" aria-label="Ride type" style="display: flex; flex-wrap: wrap; gap: 8px">
