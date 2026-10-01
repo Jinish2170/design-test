@@ -13,6 +13,7 @@ To see the motion, open the *Homepage* board full-window and scroll.
 | Path | Contents |
 |---|---|
 | `design/Main.dc.html` | The homepage. Fluid layout from 1440 px down to phone width. |
+| `design/Mobile.dc.html` | The same page in a 390 px frame, so the canvas shows the phone layout. Generated from the same source. |
 | `design/Motion*.dc.html` | Five standalone motion studies with a scrub slider. These are reference boards; all five are also built into the homepage. |
 | `design/canvas.json` | Canvas layout: board positions, sizes and titles. |
 | `assets/` | Car artwork (SVG): body, separate wheel, light-sweep mask per model, plus a film-grain texture. `blob-map.json` maps each `/_blob/<id>` URL used in the designs to its file here. |
@@ -26,8 +27,8 @@ source and spec. A production build would port the same markup and CSS to the si
 ## Scroll motion system
 
 Each section sets one CSS variable, `--p`, between 0 and 1. A small scroll handler writes it, and everything else is
-`calc()` in CSS. Pinned sections only pin on desktop, in a real browser window. On phones and on the canvas they
-show a fixed rest state, so nothing is ever hidden behind an animation.
+`calc()` in CSS. In a real browser window, pinned sections pin on desktop and on phones. On the canvas they show a
+fixed rest state, so nothing is ever hidden behind an animation.
 
 | Section | Motion | Pinned for |
 |---|---|---|
@@ -36,6 +37,24 @@ show a fixed rest state, so nothing is ever hidden behind an animation.
 | Services | Rows fade in one after another. Hovering a row switches the close-up crop on the left. | — |
 | Tours | **04 Route draw:** the headline reveals line by line, a car marker travels Paihia → Taupō, and each stop lights up as it's reached. | 250vh |
 | Final call to action | **05 Headlight wake:** two headlights switch on, the beams open, then the call to action appears. | 200vh |
+
+### On phones (860 px and below)
+
+Every sequence above still runs on phones. Each is recomposed for a narrow screen rather than switched off.
+
+![Phone scroll sequence](previews/phone-sequence.jpg)
+
+| Section | On phones |
+|---|---|
+| Hero | Pinned (250vh). The car bleeds past the screen edge and the same light sweep and push through the glass play. The booking form is replaced by **Get a quote** and **Call** buttons. |
+| Booking | A full form in its own block straight after the hero (`#book-m`). All "Book" links point to it on phones. |
+| Fleet | Pinned (300vh) horizontal drive-by, one car per screen, with specs in two columns. |
+| Services | The close-up image sticks under the header while the list scrolls beneath it. The row nearest the middle of the screen selects the close-up, since phones have no hover. |
+| Tours | Pinned (230vh) **vertical** road. The route draws downward, the marker travels the road, and each stop lights up. |
+| Final call to action | Pinned (170vh) headlight wake. |
+
+Phone heights use `svh`, so the browser's address bar showing and hiding doesn't make pinned scenes jump. The page
+also has a viewport meta tag. Without it, phones would render the desktop layout zoomed out.
 
 Also included:
 - **Page load:** a one-time intro (headline rise, car fade-in, lights flicker on).

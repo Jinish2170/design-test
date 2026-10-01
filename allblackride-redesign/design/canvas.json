@@ -50,6 +50,14 @@
       "w": 1200,
       "x": 1600,
       "y": 3600
+    },
+    "Mobile.dc.html": {
+      "x": -550,
+      "y": 0,
+      "w": 390,
+      "h": 7600,
+      "title": "Phone (390) — scroll motion runs on a real phone",
+      "is_interactive": true
     }
   },
   "createdOnFiles": {
@@ -80,6 +88,7 @@
   },
   "order": [
     "Main.dc.html",
+    "Mobile.dc.html",
     "Motion1-LightSweep.dc.html",
     "Motion2-ThroughTheGlass.dc.html",
     "Motion3-DriveBy.dc.html",

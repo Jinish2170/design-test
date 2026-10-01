@@ -94,13 +94,14 @@ h1,h2,h3{{text-wrap:balance}}
 #journeys{{--p:1}}
 #finale{{--p:1}}
 .marq-wrap{{--p:.25}}
-@media (min-width:861px){{
+/* pinned tracks (all widths) */
+@supports (top:0){{
   [data-live] #hero{{height:320vh}}
   [data-live] #fleet{{height:360vh}}
   [data-live] #finale{{height:200vh}}
   [data-live] #journeys{{height:250vh}}
   [data-live] .route-stage{{padding-top:clamp(28px,4vh,56px) !important;padding-bottom:clamp(28px,4vh,56px) !important}}
-  [data-live] .pinned{{position:sticky;top:72px;height:calc(100vh - 72px) !important;min-height:620px !important}}
+  [data-live] .pinned{{position:sticky;top:72px;height:calc(100vh - 72px) !important;height:calc(100svh - 72px) !important;min-height:620px !important}}
   [data-live] .fleet-row{{flex-direction:row !important;flex-shrink:0;width:300% !important;height:100%;transform:translateX(calc(var(--e) * -33.3333%))}}
   [data-live] .slide{{width:33.3333%;min-height:0 !important;border-top:0 !important;padding-top:0 !important;padding-bottom:24px !important;justify-content:center !important}}
   [data-live] .slide .car{{width:min(980px, 90%, calc((100vh - 560px) * 3)) !important}}
@@ -120,6 +121,8 @@ h1,h2,h3{{text-wrap:balance}}
 .hero-black{{opacity:var(--q4)}}
 .hero-black span{{transform:translateY(calc((1 - var(--q4)) * 24px))}}
 .hero-scrollcue{{opacity:calc(1 - var(--q2) * 3)}}
+.mhero-cta{{opacity:calc(1 - var(--q2) * 1.8);transform:translateY(calc(var(--q2) * 40px))}}
+.route-car-v{{offset-path:path("M 50 12 C 92 50, 8 78, 50 112 S 92 176, 50 208 S 8 270, 50 304 S 92 366, 50 392");offset-distance:calc(var(--q) * 100%);offset-rotate:0deg;opacity:clamp(0,calc(var(--q) * 20),1)}}
 
 /* ---------- marquee ---------- */
 .marq{{transform:translateX(calc(var(--p) * -36%));will-change:transform}}
@@ -173,14 +176,50 @@ h1,h2,h3{{text-wrap:balance}}
   .navlinks{{display:none !important}}
   .navright{{gap:10px !important}}
   .menu{{display:inline-flex !important}}
-  .hero-stage{{min-height:0 !important;padding-bottom:28px !important}}
-  .hero-carzone{{position:relative !important;inset:auto !important;margin:24px 0 8px}}
-  .hero-dock{{position:relative !important;left:auto !important;right:auto !important;bottom:auto !important}}
-  .hero-black,.hero-scrollcue{{display:none !important}}
-  .two-col{{grid-template-columns:minmax(0,1fr) !important}}
-  .crop-col{{position:relative !important;top:auto !important}}
-  .slide{{padding-top:100px !important;min-height:0 !important}}
-  .slide .ghostname{{top:20px !important}}
+  /* hero: same light-sweep / through-the-glass rig, recomposed for a tall screen */
+  .hero-stage{{min-height:700px !important;padding:24px 20px 0 !important}}
+  .hero-type{{gap:18px !important}}
+  .hero-type p{{max-width:none !important;font-size:15px !important}}
+  .hero-carzone{{bottom:max(118px, 30%) !important;overflow:visible}}
+  .hero-floor{{bottom:max(118px, 30%) !important}}
+  .hero-rig{{width:124% !important;min-width:0 !important;flex-shrink:0}}
+  .hero-dock{{display:none !important}}
+  .mhero-cta{{display:flex !important}}
+  .mbook{{display:block !important}}
+  /* fleet */
+  .fleet-head{{padding-top:36px !important}}
+  .slide{{padding:96px 20px 36px !important;min-height:0 !important;justify-content:center !important}}
+  .slide .ghostname{{top:24px !important;font-size:60px !important}}
+  .slide .car{{width:100% !important}}
+  .slide .specs{{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:16px 18px !important;margin-top:18px !important}}
+  .slide .specs .wide{{font-size:20px !important}}
+  /* services: close-up sticks while the list scrolls under it; active row follows scroll */
+  .two-col{{display:block !important}}
+  .crop-col{{display:contents !important}}
+  .crop-col h2{{margin-bottom:24px !important}}
+  .crop{{position:sticky;top:84px;z-index:3;aspect-ratio:16 / 8 !important;margin-bottom:6px;box-shadow:0 22px 28px 6px #070708}}
+  /* tours: vertical road */
+  .route-h{{display:none !important}}
+  .route-v{{display:block !important}}
+  .rt-head{{margin-bottom:28px !important}}
+  .rt-cta{{margin-top:28px !important}}
+  .rt-cta a{{flex-grow:1}}
+  .route-stage{{padding:72px 0 !important}}
+}}
+@media (max-width:860px){{
+  [data-live] #hero{{height:250vh}}
+  [data-live] #fleet{{height:300vh}}
+  [data-live] #journeys{{height:230vh}}
+  [data-live] #finale{{height:170vh}}
+  [data-live] .pinned{{min-height:0 !important}}
+  [data-live] .hero-stage{{min-height:0 !important}}
+  [data-live] .route-stage{{padding:20px 0 !important}}
+  [data-live] .slide{{padding:0 20px 20px !important}}
+  [data-live] .slide .ghostname{{top:50% !important;margin-top:-118px !important}}
+  [data-live] .slide .car{{width:min(100%, calc((100svh - 470px) * 3)) !important}}
+  [data-live] .slide > p{{display:none}}
+  [data-live] .fleet-head p{{display:none}}
+  [data-live] .rt-copy{{display:none}}
 }}
 @media (max-width:420px){{.mark{{display:none}}.navbook{{padding:0 16px !important}}}}
 @media (prefers-reduced-motion:reduce){{.idle,.h1-line > span,.intro-fade,.intro-car,.bloom > i,.dock-in{{animation:none !important}}}}
@@ -190,21 +229,21 @@ def slide(i, model, num, cls, ghost, mdl, pax, best, copy):
     return f'''<article class="slide" aria-label="{cls}" style="position: relative; flex-shrink: 0; min-height: 600px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 22px; padding: 150px clamp(20px, 4vw, 56px); border-top: 1px solid rgba(237,234,228,0.08)">
 <div class="ghostname wide" aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 24px; text-align: center; font-size: clamp(72px, 11vw, 168px); font-weight: 900; line-height: 1; letter-spacing: -0.03em; text-transform: uppercase; color: transparent; -webkit-text-stroke: 1px rgba(237,234,228,0.1); white-space: nowrap; pointer-events: none">{ghost}</div>
 {car(model, f"{mdl} — side profile", style="width: min(980px, 94%); z-index: 1")}
-<div style="position: relative; z-index: 1; width: min(980px, 100%); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 18px 28px; align-items: end; border-top: 1px solid rgba(237,234,228,0.12); padding-top: 20px; margin-top: 30px">
+<div class="specs" style="position: relative; z-index: 1; width: min(980px, 100%); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 18px 28px; align-items: end; border-top: 1px solid rgba(237,234,228,0.12); padding-top: 20px; margin-top: 30px">
 <div style="display: flex; flex-direction: column; gap: 6px"><span class="mono" style="font-size: 10.5px; color: #8E8A83">{num} / 03</span><span class="wide" style="font-size: 24px; font-weight: 700; text-transform: uppercase; line-height: 1">{cls}</span></div>
 <div style="display: flex; flex-direction: column; gap: 6px"><span class="mono" style="font-size: 10.5px; color: #8E8A83">Vehicle</span><span style="font-size: 15px">{mdl}</span></div>
 <div style="display: flex; flex-direction: column; gap: 6px"><span class="mono" style="font-size: 10.5px; color: #8E8A83">Seats</span><span style="font-size: 15px">{pax}</span></div>
 <div style="display: flex; flex-direction: column; gap: 6px"><span class="mono" style="font-size: 10.5px; color: #8E8A83">Best for</span><span style="font-size: 15px">{best}</span></div>
-<a class="ghost" href="#book" style="justify-self: start; min-height: 48px">Reserve {ARROW}</a>
+<a class="ghost" href="{{{{bookHref}}}}" style="justify-self: start; min-height: 48px">Reserve {ARROW}</a>
 </div>
 <p style="position: relative; z-index: 1; margin: 0; width: min(980px, 100%); font-size: 15px; line-height: 1.6; color: #A39E96">{copy}</p>
 </article>'''
 
 SVC = [
- ('01', 'Airport transfers', 'Flight tracking, meet &amp; greet at arrivals, and a car at the kerb whatever time you land.', '#book'),
- ('02', 'Hourly chauffeur', 'Your car and driver by the hour — multiple stops, back-to-back meetings, a day in the city.', '#book'),
- ('03', 'City to city', 'Long-distance transfers across the North Island, without the drive.', '#book'),
- ('04', 'Events &amp; weddings', 'Weddings, parties, red carpets and private functions — arrive the way the day deserves.', '#book'),
+ ('01', 'Airport transfers', 'Flight tracking, meet &amp; greet at arrivals, and a car at the kerb whatever time you land.', '{{bookHref}}'),
+ ('02', 'Hourly chauffeur', 'Your car and driver by the hour — multiple stops, back-to-back meetings, a day in the city.', '{{bookHref}}'),
+ ('03', 'City to city', 'Long-distance transfers across the North Island, without the drive.', '{{bookHref}}'),
+ ('04', 'Events &amp; weddings', 'Weddings, parties, red carpets and private functions — arrive the way the day deserves.', '{{bookHref}}'),
  ('05', 'Private tours', 'A private chauffeur, a customised itinerary and local knowledge of where to stop.', '#journeys'),
 ]
 CROPS = [('car-sclass', 'c0', 'LED headlight detail'), ('car-sclass', 'c1', 'Door handle and chrome trim detail'), ('car-eqs', 'c2', 'Wheel detail'), ('car-vclass', 'c3', 'Rear light detail'), ('car-eqs', 'c4', 'Mirror and glasshouse detail')]
@@ -223,6 +262,7 @@ html = f'''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>All BlackRide — Home</title>
 <script src="./support.js"></script>
 </head>
@@ -249,7 +289,7 @@ html = f'''<!doctype html>
 </div>
 <div class="navright" style="display: flex; align-items: center; gap: 18px">
 <a class="mono navlinks" href="tel:+6421595696" style="display: flex; font-size: 12px; color: #B9B4AC">+64 21 595 696</a>
-<a class="cta navbook" href="#book" style="min-height: 44px; padding: 0 20px; font-size: 14px">Book a ride</a>
+<a class="cta navbook" href="{{{{bookHref}}}}" style="min-height: 44px; padding: 0 20px; font-size: 14px">Book a ride</a>
 <button class="menu" type="button" aria-label="{{{{menuLabel}}}}" aria-expanded="{{{{menuExpanded}}}}" aria-controls="mnav" onClick="{{{{toggleMenu}}}}" style="display: none; width: 44px; height: 44px; align-items: center; justify-content: center; background: transparent; border: 1px solid rgba(237,234,228,0.2); border-radius: 999px; color: #EDEAE4; cursor: pointer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="{{{{menuIcon}}}}"></path></svg></button>
 </div>
 </nav>
@@ -262,7 +302,7 @@ html = f'''<!doctype html>
 <a class="mlink" href="#journeys" onClick="{{{{closeMenu}}}}">Tours {ARROW}</a>
 <a class="mlink" href="#join" onClick="{{{{closeMenu}}}}">Drive with us {ARROW}</a>
 <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 32px">
-<a class="cta" href="#book" onClick="{{{{closeMenu}}}}">Book a ride</a>
+<a class="cta" href="{{{{bookHref}}}}" onClick="{{{{closeMenu}}}}">Book a ride</a>
 <a class="ghost" href="tel:+6421595696" style="justify-content: center">Call +64 21 595 696</a>
 <span class="mono" style="font-size: 10.5px; color: #8E8A83; text-align: center; margin-top: 8px">Auckland {{{{nz}}}} · on the road 24/7</span>
 </div>
@@ -289,7 +329,7 @@ html = f'''<!doctype html>
 <div class="bloom" aria-hidden="true" style="left: 4%; top: 48%; width: 13%; height: 28%"><i style="background: radial-gradient(closest-side, rgba(255,80,58,0.5), rgba(255,80,58,0.1) 50%, rgba(255,80,58,0) 100%)"></i></div>
 </div>
 </div>
-<div style="position: absolute; left: 0; right: 0; bottom: 196px; height: 1px; background: linear-gradient(90deg, rgba(237,234,228,0), rgba(237,234,228,0.18), rgba(237,234,228,0)); pointer-events: none"></div>
+<div class="hero-floor" style="position: absolute; left: 0; right: 0; bottom: 196px; height: 1px; background: linear-gradient(90deg, rgba(237,234,228,0), rgba(237,234,228,0.18), rgba(237,234,228,0)); pointer-events: none"></div>
 
 <form id="book" class="hero-dock dock-in" aria-label="Book a ride" onSubmit="{{{{onSubmit}}}}" style="position: absolute; z-index: 3; left: {PAD}; right: {PAD}; bottom: 28px; max-width: 1180px; margin: 0 auto; padding: 16px 22px 20px; background: rgba(16,16,19,0.86); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid rgba(237,234,228,0.12); border-radius: 22px; display: flex; flex-direction: column; gap: 12px">
 <div role="tablist" aria-label="Ride type" style="display: flex; flex-wrap: wrap; gap: 8px">
@@ -307,12 +347,40 @@ html = f'''<!doctype html>
 </div>
 <sc-if value="{{{{sent}}}}" hint-placeholder-val="{{{{false}}}}"><div class="sent" role="status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DCE7FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Request received — we&#39;ll call or text to confirm your ride and price.</div></sc-if>
 </form>
+<div class="mhero-cta" style="display: none; position: absolute; z-index: 3; left: 20px; right: 20px; bottom: 28px; gap: 10px">
+<a class="cta" href="#book-m" style="flex-grow: 1">Get a quote {ARROW}</a>
+<a class="ghost" href="tel:+6421595696" aria-label="Call +64 21 595 696" style="padding: 0 18px">Call</a>
+</div>
+
 
 <div class="hero-black" aria-hidden="true" style="position: absolute; inset: 0; z-index: 4; background: #050506; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; pointer-events: none">
 <span class="mono" style="font-size: 11px; color: #8E8A83">The fleet</span>
 <span class="serif" style="font-size: clamp(56px, 8vw, 120px); line-height: 1">Step inside.</span>
 </div>
 </div>
+</section>
+
+<section id="book-m" class="mbook" aria-label="Book a ride" style="display: none; padding: 36px 20px 44px; border-top: 1px solid rgba(237,234,228,0.08)">
+<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px">
+<span class="mono" style="font-size: 11px; color: #8E8A83">Book a ride · reply within minutes, 24/7</span>
+<h2 class="wide" style="margin: 0; font-size: 34px; line-height: 0.95; font-weight: 750; letter-spacing: -0.02em; text-transform: uppercase">Where <span class="serif" style="font-size: 1.1em">to?</span></h2>
+</div>
+<form class="mform" aria-label="Book a ride" onSubmit="{{{{onSubmit}}}}" style="display: flex; flex-direction: column; gap: 16px; padding: 18px; background: #101013; border: 1px solid rgba(237,234,228,0.12); border-radius: 20px">
+<div role="tablist" aria-label="Ride type" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{{{tabs}}}}" as="t" hint-placeholder-count="4">
+<button type="button" role="tab" aria-selected="{{{{t.sel}}}}" class="tab {{{{t.cls}}}}" onClick="{{{{t.pick}}}}">{{{{t.label}}}}</button>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; align-items: end">
+<div class="fld" style="grid-column: 1 / -1"><label for="m-pu">Pick-up</label><input id="m-pu" type="text" placeholder="{{{{puHint}}}}"></div>
+<div class="fld" style="grid-column: 1 / -1"><label for="m-dr">{{{{dropLabel}}}}</label><input id="m-dr" type="text" placeholder="{{{{dropHint}}}}"></div>
+<div class="fld"><label for="m-dt">Date</label><input id="m-dt" type="date"></div>
+<div class="fld"><label for="m-tm">Time</label><input id="m-tm" type="time"></div>
+<div class="fld"><label for="m-px">Passengers</label><select id="m-px"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+<button type="submit" class="cta" style="width: 100%; grid-column: 1 / -1">{{{{submitLabel}}}} {ARROW}</button>
+</div>
+<sc-if value="{{{{sent}}}}" hint-placeholder-val="{{{{false}}}}"><div class="sent" role="status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#DCE7FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Request received — we&#39;ll call or text to confirm your ride and price.</div></sc-if>
+</form>
 </section>
 
 <div class="marq-wrap" data-scene="through" style="border-top: 1px solid rgba(237,234,228,0.08); border-bottom: 1px solid rgba(237,234,228,0.08); padding: 24px 0; overflow: hidden">
@@ -324,7 +392,7 @@ html = f'''<!doctype html>
 <!-- 03 DRIVE-BY FLEET -->
 <section id="fleet" data-pin="1" aria-label="Fleet">
 <div class="stage pinned fleet-stage" style="display: flex; flex-direction: column">
-<div style="position: relative; z-index: 2; width: 100%; max-width: 1440px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) {PAD} 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px 40px">
+<div class="fleet-head" style="position: relative; z-index: 2; width: 100%; max-width: 1440px; margin: 0 auto; padding: clamp(40px, 5vw, 64px) {PAD} 16px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px 40px">
 <h2 class="wide" style="{H2}">Three ways<br>to <span class="serif" style="font-size: 1.1em">arrive.</span></h2>
 <div style="display: flex; flex-direction: column; gap: 14px; width: min(340px, 100%)">
 <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #A39E96">Mercedes-Benz and BMW, maintained to the highest standard. Professional chauffeurs only.</p>
@@ -362,7 +430,7 @@ html = f'''<!doctype html>
 <h2 class="wide" style="{H2}"><span class="rt-line"><span>North Island,</span></span><span class="rt-line"><span class="serif" style="font-size: 1.1em">door to door.</span></span></h2>
 <p class="rt-copy" style="margin: 0; max-width: 380px; font-size: 16px; line-height: 1.6; color: #A39E96">Private tours and long-distance transfers from Auckland — north to the Bay of Islands, south to the lakes.</p>
 </div>
-<div style="overflow-x: auto; padding-bottom: 8px">
+<div class="route-h" style="overflow-x: auto; padding-bottom: 8px">
 <div style="min-width: 760px">
 <svg viewBox="0 0 1200 200" width="100%" aria-hidden="true" style="display: block; overflow: visible">
 <defs><linearGradient id="rt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#EDEAE4" stop-opacity=".35"></stop><stop offset="1" stop-color="#DCE7FF"></stop></linearGradient></defs>
@@ -384,7 +452,17 @@ html = f'''<!doctype html>
 </div>
 </div>
 </div>
-<div class="rt-cta" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 48px"><a class="cta" href="#book">Plan a private tour</a><a class="ghost" href="#book">City-to-city quote</a></div>
+<div class="route-v" style="display: none; position: relative; height: 404px">
+<svg viewBox="0 0 100 404" width="100" height="404" aria-hidden="true" style="position: absolute; left: -14px; top: 0; overflow: visible">
+<defs><linearGradient id="rtv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDEAE4" stop-opacity=".35"></stop><stop offset="1" stop-color="#DCE7FF"></stop></linearGradient></defs>
+<path d="M 50 12 C 92 50, 8 78, 50 112 S 92 176, 50 208 S 8 270, 50 304 S 92 366, 50 392" fill="none" stroke="rgba(237,234,228,0.12)" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<path class="route-draw" pathLength="1" d="M 50 12 C 92 50, 8 78, 50 112 S 92 176, 50 208 S 8 270, 50 304 S 92 366, 50 392" fill="none" stroke="url(#rtv)" stroke-width="2.5" stroke-linecap="round"></path>
+<g class="stop s1"><circle cx="50" cy="12" r="14" fill="#DCE7FF" fill-opacity=".13"></circle><circle cx="50" cy="12" r="4.5" fill="#EDEAE4"></circle></g><g class="stop s2"><circle cx="50" cy="112" r="18" fill="#DCE7FF" fill-opacity=".13"></circle><circle cx="50" cy="112" r="6.5" fill="#ffffff"></circle></g><g class="stop s3"><circle cx="50" cy="208" r="14" fill="#DCE7FF" fill-opacity=".13"></circle><circle cx="50" cy="208" r="4.5" fill="#EDEAE4"></circle></g><g class="stop s4"><circle cx="50" cy="304" r="14" fill="#DCE7FF" fill-opacity=".13"></circle><circle cx="50" cy="304" r="4.5" fill="#EDEAE4"></circle></g><g class="stop s5"><circle cx="50" cy="392" r="14" fill="#DCE7FF" fill-opacity=".13"></circle><circle cx="50" cy="392" r="4.5" fill="#EDEAE4"></circle></g>
+<g class="route-car-v"><circle r="22" fill="#DCE7FF" fill-opacity=".10"></circle><circle r="9" fill="#DCE7FF" fill-opacity=".25"></circle><circle r="4" fill="#ffffff"></circle></g>
+</svg>
+<div class="stop s1" style="position: absolute; left: 92px; right: 0; top: 12px; transform: translateY(-50%); display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="display: flex; flex-direction: column; gap: 2px"><span class="wide" style="font-size: 19px; font-weight: 650; text-transform: uppercase">Paihia</span><span style="font-size: 13px; color: #A39E96">Bay of Islands</span></span><span class="mono" style="font-size: 10.5px; color: #8E8A83; white-space: nowrap">≈ 3 h north</span></div><div class="stop s2" style="position: absolute; left: 92px; right: 0; top: 112px; transform: translateY(-50%); display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="display: flex; flex-direction: column; gap: 2px"><span class="wide" style="font-size: 19px; font-weight: 650; text-transform: uppercase">Auckland</span><span style="font-size: 13px; color: #A39E96">Home base · AKL</span></span><span class="mono" style="font-size: 10.5px; color: #EDEAE4; white-space: nowrap">Start</span></div><div class="stop s3" style="position: absolute; left: 92px; right: 0; top: 208px; transform: translateY(-50%); display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="display: flex; flex-direction: column; gap: 2px"><span class="wide" style="font-size: 19px; font-weight: 650; text-transform: uppercase">Hamilton</span><span style="font-size: 13px; color: #A39E96">Waikato</span></span><span class="mono" style="font-size: 10.5px; color: #8E8A83; white-space: nowrap">≈ 1.5 h south</span></div><div class="stop s4" style="position: absolute; left: 92px; right: 0; top: 304px; transform: translateY(-50%); display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="display: flex; flex-direction: column; gap: 2px"><span class="wide" style="font-size: 19px; font-weight: 650; text-transform: uppercase">Rotorua</span><span style="font-size: 13px; color: #A39E96">Geothermal country</span></span><span class="mono" style="font-size: 10.5px; color: #8E8A83; white-space: nowrap">≈ 3 h south</span></div><div class="stop s5" style="position: absolute; left: 92px; right: 0; top: 392px; transform: translateY(-50%); display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="display: flex; flex-direction: column; gap: 2px"><span class="wide" style="font-size: 19px; font-weight: 650; text-transform: uppercase">Taupō</span><span style="font-size: 13px; color: #A39E96">Lake Taupō</span></span><span class="mono" style="font-size: 10.5px; color: #8E8A83; white-space: nowrap">≈ 3.5 h south</span></div>
+</div>
+<div class="rt-cta" style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 48px"><a class="cta" href="{{{{bookHref}}}}">Plan a private tour</a><a class="ghost" href="{{{{bookHref}}}}">City-to-city quote</a></div>
 </div>
 </div>
 </section>
@@ -402,7 +480,7 @@ html = f'''<!doctype html>
 <div class="fin-type" style="position: relative; z-index: 1; margin-top: 60px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center">
 <span class="mono" style="font-size: 11px; color: #A39E96">Any hour · any terminal · any occasion</span>
 <h2 class="wide" style="margin: 0; font-size: clamp(42px, 6.4vw, 96px); line-height: 0.9; font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase">Your car<br><span class="serif" style="font-size: 1.1em">is ready.</span></h2>
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px"><a class="cta" href="#book">Book a ride</a><a class="ghost" href="tel:+6421595696">Call +64 21 595 696</a></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 14px"><a class="cta" href="{{{{bookHref}}}}">Book a ride</a><a class="ghost" href="tel:+6421595696">Call +64 21 595 696</a></div>
 </div>
 </div>
 </section>
@@ -416,7 +494,7 @@ html = f'''<!doctype html>
 <div style="display: flex; flex-direction: column; gap: 12px"><span class="mono" style="font-size: 10.5px; color: #8A867F">Contact</span><a href="mailto:Info@allblackride.com">Info@allblackride.com</a><a href="tel:+6421595696">+64 21 595 696</a><span>Auckland, New Zealand</span></div>
 <div style="display: flex; flex-direction: column; gap: 12px"><span class="mono" style="font-size: 10.5px; color: #8A867F">Services</span><a href="#services">Airport transfers</a><a href="#services">Hourly chauffeur</a><a href="#services">City to city</a><a href="#services">Events &amp; weddings</a></div>
 <div style="display: flex; flex-direction: column; gap: 12px"><span class="mono" style="font-size: 10.5px; color: #8A867F">Tours</span><a href="#journeys">Auckland</a><a href="#journeys">Hamilton</a><a href="#journeys">Paihia</a><a href="#journeys">Rotorua · Taupō</a></div>
-<div style="display: flex; flex-direction: column; gap: 12px"><span class="mono" style="font-size: 10.5px; color: #8A867F">Company</span><a href="#book">Book a ride</a><a href="#fleet">Fleet</a><a href="#join">Join our team</a></div>
+<div style="display: flex; flex-direction: column; gap: 12px"><span class="mono" style="font-size: 10.5px; color: #8A867F">Company</span><a href="{{{{bookHref}}}}">Book a ride</a><a href="#fleet">Fleet</a><a href="#join">Join our team</a></div>
 </div>
 <div class="wide" aria-hidden="true" style="max-width: 1440px; margin: 28px auto 0; padding: 0 {PAD}; font-size: clamp(36px, 9vw, 136px); font-weight: 900; line-height: 0.82; letter-spacing: -0.03em; color: transparent; -webkit-text-stroke: 1px rgba(237,234,228,0.14); white-space: nowrap; overflow: hidden">ALL BLACK RIDE</div>
 <div class="mono" style="max-width: 1440px; margin: 0 auto; padding: 22px {PAD} 34px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 10.5px; color: #8A867F"><span>© All BlackRide · Auckland NZ</span><span>Auckland {{{{nz}}}} · on the road 24/7</span><span style="display: flex; gap: 24px"><a href="#join" style="color: #8A867F">Privacy</a><a href="#join" style="color: #8A867F">Terms</a><a href="#top" style="color: #EDEAE4">Back to top ↑</a></span></div>
@@ -428,7 +506,7 @@ html = f'''<!doctype html>
 class Component extends DCLogic {{
   constructor(props) {{
     super(props);
-    this.state = {{ tab: 0, svc: 0, menuOpen: false, sent: false, nz: this.nzTime() }};
+    this.state = {{ tab: 0, svc: 0, menuOpen: false, sent: false, nz: this.nzTime(), narrow: typeof window !== 'undefined' && window.innerWidth <= 860 }};
   }}
   nzTime() {{
     try {{ return new Intl.DateTimeFormat('en-NZ', {{ timeZone: 'Pacific/Auckland', hour: '2-digit', minute: '2-digit', hour12: false }}).format(new Date()); }} catch (e) {{ return ''; }}
@@ -455,6 +533,8 @@ class Component extends DCLogic {{
     const root = document.querySelector('[data-abr-root]');
     if (!root) return;
     const vh = window.innerHeight;
+    const narrow = window.innerWidth <= 860;
+    if (narrow !== this.state.narrow) this.setState({{ narrow }});
     // On the canvas the frame is as tall as the page (or taller than any real screen): keep the designed rest states.
     const live = vh < 1600 && document.documentElement.scrollHeight > vh + 120;
     if (live !== root.hasAttribute('data-live')) {{
@@ -475,6 +555,16 @@ class Component extends DCLogic {{
       if (el && el.getBoundingClientRect().top < vh * 0.45) active = id;
     }});
     if (root.getAttribute('data-active') !== active) root.setAttribute('data-active', active);
+    if (narrow) {{
+      // No hover on touch screens: the close-up follows the row nearest the middle of the screen.
+      let best = -1, dist = Infinity;
+      root.querySelectorAll('.svc').forEach((el, i) => {{
+        const r = el.getBoundingClientRect();
+        const d = Math.abs(r.top + r.height / 2 - vh * 0.62);
+        if (r.bottom > 0 && r.top < vh && d < dist) {{ dist = d; best = i; }}
+      }});
+      if (best >= 0 && best !== this.state.svc) this.setState({{ svc: best }});
+    }}
     root.querySelectorAll('[data-pin]').forEach((el) => {{
       const stage = el.firstElementChild;
       const pinned = stage && getComputedStyle(stage).position === 'sticky';
@@ -505,6 +595,7 @@ class Component extends DCLogic {{
       tabs: T.map((t, i) => ({{ label: t.label, sel: i === tab ? 'true' : 'false', cls: i === tab ? 'on' : '', pick: () => this.setState({{ tab: i }}) }})),
       dropLabel: T[tab].drop, dropHint: T[tab].dh, puHint: T[tab].pu,
       nz: this.state.nz,
+      bookHref: this.state.narrow ? '#book-m' : '#book',
       menuOpen: this.state.menuOpen,
       menuExpanded: this.state.menuOpen ? 'true' : 'false',
       menuLabel: this.state.menuOpen ? 'Close menu' : 'Open menu',
@@ -530,4 +621,7 @@ class Component extends DCLogic {{
 import sys
 H = sys.argv[1] if len(sys.argv) > 1 else '6400'
 open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), '..', 'design', 'Main.dc.html'), 'w').write(html.replace('__H__', H))
+# Same page, framed at phone width for the canvas (media queries switch to the phone layout).
+mob = html.replace('__H__', '7600').replace('"width":1440', '"width":390').replace('<title>All BlackRide — Home</title>', '<title>All BlackRide — Home (phone)</title>')
+open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), '..', 'design', 'Mobile.dc.html'), 'w').write(mob)
 print('written', len(html))
