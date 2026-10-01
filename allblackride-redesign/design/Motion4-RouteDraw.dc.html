@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Motion 04 — Route draw</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&amp;family=Instrument+Serif:ital@0;1&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#070708}
+.st,.st *{box-sizing:border-box}
+.st{font-family:'Archivo',system-ui,sans-serif;color:#EDEAE4;-webkit-font-smoothing:antialiased}
+.wide{font-stretch:125%}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;font-stretch:100%}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+.sweep{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;background:linear-gradient(100deg,transparent 0 44%,rgba(205,222,255,.06) 47%,rgba(255,255,255,.36) 50%,rgba(205,222,255,.06) 53%,transparent 56% 100%);background-size:260% 100%;background-repeat:no-repeat;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.m-s{-webkit-mask-image:url(/_blob/1fd7b97953a42c6538f99a5b348aa297);mask-image:url(/_blob/1fd7b97953a42c6538f99a5b348aa297)}
+.m-v{-webkit-mask-image:url(/_blob/a38e09f8f80b2f1053cc1af07e8f7744);mask-image:url(/_blob/a38e09f8f80b2f1053cc1af07e8f7744)}
+.m-e{-webkit-mask-image:url(/_blob/e072cfe8de8ce0058192ac3ab9542a75);mask-image:url(/_blob/e072cfe8de8ce0058192ac3ab9542a75)}
+.reflect{transform:scaleY(-1);opacity:.1;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 18%);mask-image:linear-gradient(to top,#000 0%,transparent 18%)}
+.scrub{-webkit-appearance:none;appearance:none;flex-grow:1;height:44px;background:transparent;cursor:pointer;margin:0}
+.scrub::-webkit-slider-runnable-track{height:2px;background:rgba(237,234,228,.22);border-radius:2px}
+.scrub::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#EDEAE4;margin-top:-8px;box-shadow:0 0 0 6px rgba(237,234,228,.12)}
+.scrub::-moz-range-track{height:2px;background:rgba(237,234,228,.22)}
+.scrub::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#EDEAE4;border:0}
+.play{font:inherit;font-size:13px;min-height:44px;min-width:96px;padding:0 18px;border-radius:999px;border:1px solid rgba(237,234,228,.25);background:transparent;color:#EDEAE4;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.play:hover{border-color:#EDEAE4}
+.key{font:inherit;text-align:left;cursor:pointer;background:transparent;border:0;border-top:1px solid rgba(237,234,228,.14);color:#6F6B65;padding:12px 0 0;min-height:44px;display:flex;flex-direction:column;gap:6px;transition:color .3s,border-color .3s}
+.key.on{color:#EDEAE4;border-top-color:#EDEAE4}
+.key:hover{color:#CFCAC2}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+
+[data-stage]{--p:0.55}
+[data-stage]{--q:clamp(0,calc(var(--p) / .9),1)}
+.route-draw{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--q))}
+.stop{opacity:clamp(.18,calc((var(--q) - var(--t)) * 14 + .18),1)}
+.s1{--t:0}.s2{--t:.22}.s3{--t:.46}.s4{--t:.7}.s5{--t:.95}
+.rd-cta{opacity:clamp(.3,calc((var(--q) - .9) * 10 + .3),1)}
+</style>
+</helmet>
+<div class="st" style="width: 1200px; height: 780px; background: #070708; padding: 32px 32px 28px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 24px">
+<div style="display: flex; align-items: baseline; gap: 18px">
+<span class="mono" style="font-size: 11px; color: #8E8A83">Motion 04</span>
+<h1 class="wide" style="margin: 0; font-size: 26px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.01em">Route draw</h1>
+</div>
+<span class="mono" style="font-size: 11px; color: #8E8A83">Tours · draws as section crosses viewport</span>
+</div>
+<div data-stage="1" style="position: relative; height: 520px; border-radius: 22px; overflow: hidden; background: #050506; border: 1px solid rgba(237,234,228,0.08)">
+<div style="position: absolute; left: 44px; top: 40px">
+<span class="wide" style="font-size: 52px; font-weight: 700; line-height: 0.92; text-transform: uppercase; letter-spacing: -0.02em">North Island,<br><span class="serif" style="text-transform: none">door to door.</span></span>
+</div>
+<div style="position: absolute; left: 20px; right: 20px; top: 210px">
+<svg viewBox="0 0 1200 200" width="100%" aria-hidden="true" style="display: block; overflow: visible">
+<defs><linearGradient id="rt" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#EDEAE4" stop-opacity=".35"></stop><stop offset="1" stop-color="#DCE7FF"></stop></linearGradient></defs>
+<path d="M 120 120 C 200 120, 260 70, 360 70 S 520 140, 600 140 S 760 60, 840 60 S 1000 130, 1080 120" fill="none" stroke="rgba(237,234,228,0.12)" stroke-width="1.5" stroke-dasharray="4 8"></path>
+<path class="route-draw" pathLength="1" d="M 120 120 C 200 120, 260 70, 360 70 S 520 140, 600 140 S 760 60, 840 60 S 1000 130, 1080 120" fill="none" stroke="url(#rt)" stroke-width="2.5" stroke-linecap="round"></path>
+<g class="stop s1"><circle cx="120" cy="120" r="16" fill="#DCE7FF" fill-opacity=".12"></circle><circle cx="120" cy="120" r="5" fill="#EDEAE4"></circle></g>
+<g class="stop s2"><circle cx="360" cy="70" r="22" fill="#DCE7FF" fill-opacity=".14"></circle><circle cx="360" cy="70" r="7" fill="#ffffff"></circle></g>
+<g class="stop s3"><circle cx="600" cy="140" r="16" fill="#DCE7FF" fill-opacity=".12"></circle><circle cx="600" cy="140" r="5" fill="#EDEAE4"></circle></g>
+<g class="stop s4"><circle cx="840" cy="60" r="16" fill="#DCE7FF" fill-opacity=".12"></circle><circle cx="840" cy="60" r="5" fill="#EDEAE4"></circle></g>
+<g class="stop s5"><circle cx="1080" cy="120" r="16" fill="#DCE7FF" fill-opacity=".12"></circle><circle cx="1080" cy="120" r="5" fill="#EDEAE4"></circle></g>
+</svg>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 10px; text-align: center">
+<div class="stop s1" style="display: flex; flex-direction: column; gap: 4px"><span class="wide" style="font-size: 18px; font-weight: 600; text-transform: uppercase">Paihia</span><span class="mono" style="font-size: 10px; color: #8E8A83">≈ 3 h north</span></div>
+<div class="stop s2" style="display: flex; flex-direction: column; gap: 4px"><span class="wide" style="font-size: 18px; font-weight: 600; text-transform: uppercase">Auckland</span><span class="mono" style="font-size: 10px; color: #EDEAE4">Home base</span></div>
+<div class="stop s3" style="display: flex; flex-direction: column; gap: 4px"><span class="wide" style="font-size: 18px; font-weight: 600; text-transform: uppercase">Hamilton</span><span class="mono" style="font-size: 10px; color: #8E8A83">≈ 1.5 h south</span></div>
+<div class="stop s4" style="display: flex; flex-direction: column; gap: 4px"><span class="wide" style="font-size: 18px; font-weight: 600; text-transform: uppercase">Rotorua</span><span class="mono" style="font-size: 10px; color: #8E8A83">≈ 3 h south</span></div>
+<div class="stop s5" style="display: flex; flex-direction: column; gap: 4px"><span class="wide" style="font-size: 18px; font-weight: 600; text-transform: uppercase">Taupō</span><span class="mono" style="font-size: 10px; color: #8E8A83">≈ 3.5 h south</span></div>
+</div>
+</div>
+<a class="rd-cta" href="#" style="position: absolute; right: 44px; top: 52px; display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 22px; border-radius: 999px; background: #EDEAE4; color: #070708; font-weight: 600; font-size: 14px; text-decoration: none">Plan a private tour <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+</div>
+<div style="display: flex; align-items: center; gap: 18px">
+<button type="button" class="play" onClick="{{onPlay}}">{{playLabel}}</button>
+<label for="scrub" class="mono" style="font-size: 10.5px; color: #8E8A83; white-space: nowrap">Scroll</label>
+<input id="scrub" class="scrub" type="range" min="0" max="1000" step="1" value="{{pct}}" onChange="{{onScrub}}">
+<span class="mono" style="font-size: 12px; width: 48px; text-align: right">{{pctLabel}}</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{keys}}" as="k" hint-placeholder-count="4">
+<button type="button" class="key {{k.cls}}" onClick="{{k.go}}"><span class="mono" style="font-size: 10.5px">{{k.label}}</span><span style="font-size: 13px; line-height: 1.4">{{k.text}}</span></button>
+</sc-for>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1200,"height":780}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { p: 0.55, playing: false };
+  }
+  componentDidMount() { this.apply(); }
+  componentDidUpdate() { this.apply(); }
+  componentWillUnmount() { if (this.raf) cancelAnimationFrame(this.raf); }
+  apply() {
+    const el = document.querySelector('[data-stage]');
+    if (el) el.style.setProperty('--p', this.state.p.toFixed(4));
+  }
+  stop() { if (this.raf) cancelAnimationFrame(this.raf); this.raf = null; }
+  play() {
+    if (this.state.playing) { this.stop(); this.setState({ playing: false }); return; }
+    const from = this.state.p >= 0.995 ? 0 : this.state.p;
+    const start = performance.now();
+    const loop = (t) => {
+      const p = Math.min(1, from + (t - start) / 4500);
+      this.setState({ p, playing: p < 1 });
+      if (p < 1) this.raf = requestAnimationFrame(loop);
+    };
+    this.setState({ playing: true });
+    this.raf = requestAnimationFrame(loop);
+  }
+  renderVals() {
+    const p = this.state.p;
+    const K = [{"at": 0, "text": "Dashed ghost road only; destinations dimmed."}, {"at": 0.3, "text": "Line draws from Paihia; Auckland lights as home base."}, {"at": 0.6, "text": "Hamilton and Rotorua ignite as the line reaches them."}, {"at": 0.9, "text": "Taup\u014d reached; tour CTA becomes active."}];
+    return {
+      pct: Math.round(p * 1000),
+      pctLabel: Math.round(p * 100) + '%',
+      playLabel: this.state.playing ? 'Pause' : 'Play',
+      onPlay: () => this.play(),
+      onScrub: (e) => { this.stop(); this.setState({ p: Number(e.target.value) / 1000, playing: false }); },
+      keys: K.map((k) => ({ label: Math.round(k.at * 100) + '%', text: k.text, cls: p >= k.at - 0.001 ? 'on' : '', go: () => { this.stop(); this.setState({ p: k.at, playing: false }); } })),
+    };
+  }
+}
+</script>
+</body>
+</html>
