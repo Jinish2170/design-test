@@ -18,6 +18,7 @@ To see the motion, open the *Homepage* board full-window and scroll.
 | `design/canvas.json` | Canvas layout: board positions, sizes and titles. |
 | `assets/` | Car artwork (SVG): body, separate wheel, light-sweep mask per model, plus a film-grain texture. `blob-map.json` maps each `/_blob/<id>` URL used in the designs to its file here. |
 | `tools/` | Generators. `gen_cars.py` draws the cars; `gen_homepage.py` and `gen_motion_studies.py` write the `.dc.html` files into `design/`. |
+| `web/` | **The production React app** (React 19 + Vite + TypeScript). Same design, motion and phone behaviour. See `web/README.md`. |
 | `previews/` | Screenshots: full desktop and mobile pages, scroll frames for each motion sequence, and the five studies. |
 
 The `.dc.html` files are Claude Design canvas components. They load the canvas runtime (`support.js`) and reference

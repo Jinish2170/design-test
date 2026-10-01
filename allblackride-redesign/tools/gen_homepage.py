@@ -128,13 +128,13 @@ h1,h2,h3{{text-wrap:balance}}
 .marq{{transform:translateX(calc(var(--p) * -36%));will-change:transform}}
 
 /* ---------- 03: drive-by fleet ---------- */
-.fleet-stage{{--e:clamp(0,calc((var(--p) - .06) / .82 * 2),2);--spin:calc(var(--p) * 2400)}}
+.fleet-stage{{--e:calc(clamp(0,calc((var(--p) - .08) / .34),1) + clamp(0,calc((var(--p) - .58) / .34),1));--spin:calc(var(--p) * 2400)}}
 .slide:nth-child(1){{--i:0}}.slide:nth-child(2){{--i:1}}.slide:nth-child(3){{--i:2}}
 .seg{{flex-grow:1;height:2px;background:rgba(237,234,228,.16);position:relative;overflow:hidden}}
 .seg i{{position:absolute;inset:0;background:#EDEAE4;transform-origin:0 50%}}
 .seg:nth-child(1) i{{transform:scaleX(clamp(0,calc(var(--e) + .02),1))}}
 .seg:nth-child(2) i{{transform:scaleX(clamp(0,calc(var(--e) - 1 + .02),1))}}
-.seg:nth-child(3) i{{transform:scaleX(clamp(0,calc((var(--p) - .88) / .1),1))}}
+.seg:nth-child(3) i{{transform:scaleX(clamp(0,calc((var(--p) - .92) / .08),1))}}
 
 /* ---------- services: staggered entrance + detail crops ---------- */
 .svc{{opacity:clamp(0,calc(var(--p) * 3.2 - var(--i) * .45),1);transform:translateY(calc((1 - clamp(0,calc(var(--p) * 3.2 - var(--i) * .45),1)) * 36px))}}
